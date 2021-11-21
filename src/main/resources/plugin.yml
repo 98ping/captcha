@@ -1,0 +1,5 @@
+name: captcha
+version: 1.1
+author: ping
+main: me.ninetyeightping.captcha.Captcha
+description: lightweight captcha plugin utilizting MongoDB to save entries. Good for servers that get botted
