@@ -45,6 +45,24 @@ class MenuListener : Listener {
         }
 
         @EventHandler
+        fun checkIfPassedOrNot(event: InventoryCloseEvent) {
+            val player = event.player as Player
+            val inventory1 = event.inventory
+
+            if (Captcha.instance.captchaHandler.pendingCaptchas.containsKey(player)) {
+                val inventory = Captcha.instance.captchaHandler.pendingCaptchas[player]
+                if (inventory != null) {
+                    if (inventory.title.equals(inventory1.title)) {
+                        if (!Captcha.instance.captchaHandler.existsAndPassed(player)) {
+                            player.kickPlayer("${ChatColor.RED}Failed the captcha!")
+                        }
+                    }
+                }
+            }
+        }
+
+
+        @EventHandler
         fun click(event: InventoryClickEvent) {
             val player = event.whoClicked as Player
             val inventory1 = event.inventory
@@ -55,9 +73,10 @@ class MenuListener : Listener {
                 if (inventory != null) {
                     if (inventory.title.equals(inventory1.title)) {
                         if (clicked.type == Material.DIAMOND) {
-                            player.closeInventory()
                             player.sendMessage("${ChatColor.YELLOW}You have passed the captcha")
                             Captcha.instance.captchaHandler.passPlayer(player)
+
+                            player.closeInventory()
                         } else {
                             return
                         }

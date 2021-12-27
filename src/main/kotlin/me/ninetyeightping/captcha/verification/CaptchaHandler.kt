@@ -32,7 +32,7 @@ class CaptchaHandler {
 
     fun fromPlayer(player: Player) : CaptchaModel? {
         for (model in comps) {
-            if (model.uniqueId.toString() == player.uniqueId.toString()) return model;
+            if (model.uniqueId == player.uniqueId.toString()) return model;
         }
         return null
     }
@@ -46,8 +46,8 @@ class CaptchaHandler {
     }
 
     fun passPlayer(player: Player) {
-        val captchaModel = CaptchaModel(player.uniqueId, false)
-        Captcha.instance.mongoDatabase.completions.insertOne(deserialize(captchaModel))
+        val captchaModel = CaptchaModel(player.uniqueId.toString(), false)
+        captchaModel.push()
         refetch()
     }
 
