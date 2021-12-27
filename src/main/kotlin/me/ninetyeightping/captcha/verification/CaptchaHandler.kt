@@ -16,8 +16,8 @@ class CaptchaHandler {
     init {
         for (document in Captcha.instance.mongoDatabase.completions.find()) {
             comps.add(serialize(document))
-            println("Completed serialization of documents in mongo")
         }
+        println("Completed serialization of documents in mongo")
     }
 
     fun deserialize(captchaModel: CaptchaModel) : Document {
